@@ -14,7 +14,7 @@ class Particle :baseParticle{
 public:
     Particle(ofPoint initPos_, ofPoint initVel, ofPoint initAcc, float radius_);
     void walk();
-    void display();
+ virtual   void display();
     
     void checkEdges();
     bool constrain(ofPoint origin, float maxDist);

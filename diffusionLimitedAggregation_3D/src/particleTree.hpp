@@ -9,6 +9,7 @@
 #pragma once
 #include "ofMain.h"
 #include "stickyParticle.hpp"
+#include "stickyParticleVer1.hpp"
 
 class particleTree {
     
@@ -16,8 +17,8 @@ public:
     particleTree(ofPoint origin_, float radius_ );
     void display();
     void update();
-    bool checkCollisionTree(const stickyParticle& p);
-    void addParticle(const stickyParticle& p);
+    bool checkCollisionTree( std::unique_ptr<stickyParticle> p);
+    void addParticle(std::unique_ptr<stickyParticle> p);
     float calculateBound();
     void clear();
     void add();
@@ -29,7 +30,7 @@ public:
     float boundRad;
     int treeSize;
     
-    vector<stickyParticle> tree;
+    vector<std::unique_ptr<stickyParticle> > tree;
     ofVboMesh mesh;
     bool m;
     

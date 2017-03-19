@@ -25,8 +25,8 @@ void ofApp::setup(){
     float size = 3;
     float spacing = TWO_PI /dim;
     for(int i = 0; i < pointSize; i++){
-        
-        points.push_back(stickyParticle(ofPoint(0,0,0), maxDist, rad));
+        std::unique_ptr<stickyParticle> p(new stickyParticleVer1(ofPoint(0,0,0), maxDist, rad));
+        points.push_back(std::move(p));
     }
     // }
     cam.setNearClip(1);
@@ -46,7 +46,7 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     // if(go){
-    for(int p = 0; p < 20; p++){
+  //  for(int p = 0; p < 20; p++){
         
         
         //  if(int(a)%20 ==0 && points.size()<pointSize/2){
@@ -58,40 +58,42 @@ void ofApp::update(){
             //   rad*=1.03;
             maxDist = pointTree->calculateBound();
             for(int i = 1; i < pointSize/2; i++){
+              
+                std::unique_ptr<stickyParticle> part(new stickyParticleVer1(ofPoint(0,0,0), maxDist, rad));
                 
-                points.push_back(stickyParticle(ofPoint(0,0,0), maxDist, rad));
+                points.push_back(std::move(part));
                 
             }
             
         }
         else if(add){
             for(int i = 1; i < maxDist; i++){
-                
-                points.push_back(stickyParticle(ofPoint(0,0,0), maxDist, rad));
+                std::unique_ptr<stickyParticle> part(new stickyParticleVer1(ofPoint(0,0,0), maxDist, rad));
+                points.push_back(std::move(part));
                 add = !add;
                 
             }
             
         }
+    
+    
         
         
-        
-        
-        vector<stickyParticle>::iterator it = points.end()-1;
+        vector<std::unique_ptr<stickyParticle>>::iterator it = points.end()-1;
         for (;it != points.begin()-1; --it ) {
-            if((*it).state ==1){
-                pointTree->addParticle(*it);
+            if((*it)->state ==1){
+                pointTree->addParticle(std::move(*it));
                 points.erase(it);
             }
-            if ((*it).constrain(ofPoint(0,0,0), maxDist+rad*4)) {
+            if ((*it)->constrain(ofPoint(0,0,0), maxDist+rad*4)) {
                 points.erase(it);
                 
             }
             
-            (*it).stickyWalk();
+            (*it)->stickyWalk();
             
             
-            if ((pointTree->checkCollisionTree((*it)))){(*it).stick();}
+            if ((pointTree->checkCollisionTree((std::move(*it))))){(*it)->stick();}
             
             
             
@@ -101,7 +103,7 @@ void ofApp::update(){
         // pointTree->add();
         
         cout << ofGetFrameRate() <<" " <<pointTree->treeSize << " " <<points.size() <<endl;
-    }
+   // }
     //  }
 }
 
@@ -141,7 +143,7 @@ void ofApp::draw(){
     
     if(drawPoints){
         for(int i = 1; i <points.size(); i++){
-            points[i].display();
+            points[i]->display();
         }
     }
     if(drawBound){

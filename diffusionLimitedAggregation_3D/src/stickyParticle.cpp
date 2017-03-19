@@ -29,14 +29,14 @@ void stickyParticle::display()
     //        if(state ==1) { ofSetColor(255); ofDrawBox(position.x, position.y, position.z, radius);}
 }
 
-void stickyParticle::checkCollision(const stickyParticle& n){
+void stickyParticle::checkCollision(const std::unique_ptr<stickyParticle> n){
     
-    if (n.state ==1) {
+    if (n->state ==1) {
         
         
-        float distSqr = ((position.x - n.position.x)*(position.x - n.position.x)) + ((position.y - n.position.y)*(position.y - n.position.y))+ ((position.z - n.position.z)*(position.z - n.position.z));
+        float distSqr = ((position.x - n->position.x)*(position.x - n->position.x)) + ((position.y - n->position.y)*(position.y - n->position.y))+ ((position.z - n->position.z)*(position.z - n->position.z));
         
-        float dimSqr = (radius + n.radius)*(radius + n.radius)*0.5;
+        float dimSqr = (radius + n->radius)*(radius + n->radius)*0.5;
         
         if (distSqr <= dimSqr) {
             state = 1;
@@ -44,13 +44,13 @@ void stickyParticle::checkCollision(const stickyParticle& n){
     }
 }
 
-bool stickyParticle::checkCollisionBool(const stickyParticle& n) const{
+bool stickyParticle::checkCollisionBool(const std::unique_ptr<stickyParticle> n) const{
     
-    if (n.state == 1) {
+    if (n->state == 1) {
         
-        float distSqr = ((position.x - n.position.x)*(position.x - n.position.x)) + ((position.y - n.position.y)*(position.y - n.position.y))+ ((position.z - n.position.z)*(position.z - n.position.z));
+        float distSqr = ((position.x - n->position.x)*(position.x - n->position.x)) + ((position.y - n->position.y)*(position.y - n->position.y))+ ((position.z - n->position.z)*(position.z - n->position.z));
         
-        float dimSqr = ((radius + n.radius)*(radius + n.radius));
+        float dimSqr = ((radius + n->radius)*(radius + n->radius));
         
         if (distSqr <= dimSqr) {
             return true;

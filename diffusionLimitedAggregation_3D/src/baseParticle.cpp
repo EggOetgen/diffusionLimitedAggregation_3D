@@ -7,3 +7,13 @@
 //
 
 #include "baseParticle.hpp"
+
+baseParticle::baseParticle(ofPoint initPos_, ofPoint initVel, ofPoint initAcc, float radius_){
+
+    position     = initPos_;
+    velocity     = initVel;
+    acceleration = initAcc;
+    
+    radius = radius_;
+
+}

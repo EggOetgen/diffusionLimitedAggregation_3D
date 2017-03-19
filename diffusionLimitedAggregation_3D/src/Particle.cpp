@@ -10,15 +10,15 @@
 
 
 
-Particle::Particle(ofPoint initPos_, ofPoint initVel, ofPoint initAcc, float radius_ )
+Particle::Particle(ofPoint initPos_, ofPoint initVel, ofPoint initAcc, float radius_ ):baseParticle(initPos_, initVel, initAcc, radius_)
 {
     
-    position     = initPos_;
-    velocity     = initVel;
-    acceleration = initAcc;
-    
+//    position     = initPos_;
+//    velocity     = initVel;
+//    acceleration = initAcc;
+//    
     radius = radius_;
-    mass = radius_;
+    mass = radius;
     
     boundU = -(winHeight/2);
     boundD =  winHeight/2;

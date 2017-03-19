@@ -13,13 +13,13 @@ particleTree::particleTree(ofPoint origin_, float radius_ ){
     radius = radius_;
     origin = origin_;
     
-    stickyParticle seed(origin, 1, radius);
-    seed.state = 1;
+    std::unique_ptr<stickyParticleVer1> seed (new stickyParticleVer1(origin, 1, radius));
+    seed->state = 1;
     prevTreeSize = boundRad = prevMaxDist = 0;
     
     m = true;
     treeSize = 0;
-    tree.push_back(seed);
+    tree.push_back(std::move(seed));
     mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
     
 }
@@ -40,9 +40,9 @@ void particleTree::update(){
 }
 void particleTree::display(){
     // if(m){
-    vector<stickyParticle>::iterator it = tree.begin();
+    vector<std::unique_ptr<stickyParticle>>::iterator it = tree.begin();
     for (;it != tree.end(); ++it ) {
-        (*it).display();
+        (*it)->display();
         
         //   }
     }
@@ -50,20 +50,20 @@ void particleTree::display(){
     //mesh.draw();
 }
 
-bool particleTree::checkCollisionTree(const stickyParticle& p){
+bool particleTree::checkCollisionTree( std::unique_ptr<stickyParticle> p){
     
-    vector<stickyParticle>::iterator it = tree.begin();
+    vector<std::unique_ptr<stickyParticle>>::iterator it = tree.begin();
     for (;it != tree.end(); ++it ) {
-        if(p.checkCollisionBool(*it))
+        if(p->checkCollisionBool(std::move(*it)))
             return true;
     }
     return false;
     
 }
 
-void particleTree::addParticle(const stickyParticle& p){
+void particleTree::addParticle(std::unique_ptr<stickyParticle> p){
     
-    tree.push_back(p);
+    tree.push_back(std::move(p));
     treeSize = tree.size();
     
 }
@@ -71,9 +71,9 @@ void particleTree::addParticle(const stickyParticle& p){
 float particleTree::calculateBound(){
     
     float maxDist = 0;
-    vector<stickyParticle>::iterator it = tree.begin();
+    vector<std::unique_ptr<stickyParticle>>::iterator it = tree.begin();
     for (;it != tree.end(); ++it ) {
-        float distSqr = (*it).position.squareDistance(origin);
+        float distSqr = (*it)->position.squareDistance(origin);
         if (distSqr > maxDist) {
             maxDist = distSqr;
         }
@@ -96,7 +96,7 @@ void particleTree::clear(){
 void particleTree::add(){
     //  vector<stickyParticle>::iterator it = tree.begin();
     for (int i =treeSize;i<tree.size(); i++ ) {
-        mesh.addVertex(tree[i].position);
+        mesh.addVertex(tree[i]->position);
         mesh.addIndex(i);
         //  mesh.addIndex(i-1);
         

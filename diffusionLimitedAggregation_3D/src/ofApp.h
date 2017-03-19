@@ -11,6 +11,7 @@
 #include "Particle.hpp"
 #include "randParticle.hpp"
 #include "stickyParticle.hpp"
+#include "stickyParticleVer1.hpp"
 #include "particleTree.hpp"
 class ofApp : public ofBaseApp{
     
@@ -33,10 +34,10 @@ public:
     
     //    Particle *p = new Particle(ofPoint(0,0,0), ofPoint(1,2,0), ofPoint(0,0,0), 1);
     
-    vector<stickyParticle> points;
+    vector<std::unique_ptr<stickyParticle> > points;
     
+    //std::unique_ptr<particleTree> pointTree(new particleTree(ofPoint(0,0,0), 5.0));
     particleTree *pointTree= new particleTree(ofPoint(0,0,0), 5.0);
-    
     
     float w = (float)ofGetWidth();
     float h = (float)ofGetHeight();
