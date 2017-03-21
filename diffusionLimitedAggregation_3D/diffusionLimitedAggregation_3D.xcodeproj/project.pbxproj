@@ -12,6 +12,8 @@
 		6E07E2A51E7D7F7F00D8D8BA /* randParticle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6E07E2A31E7D7F7F00D8D8BA /* randParticle.cpp */; settings = {ASSET_TAGS = (); }; };
 		6E07E2A81E7D7FDF00D8D8BA /* stickyParticle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6E07E2A61E7D7FDF00D8D8BA /* stickyParticle.cpp */; settings = {ASSET_TAGS = (); }; };
 		6E07E2AB1E7D800700D8D8BA /* particleTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6E07E2A91E7D800700D8D8BA /* particleTree.cpp */; settings = {ASSET_TAGS = (); }; };
+		6E1B33BE1E805FCB00CA707A /* stickyParticleVer2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6E1B33BC1E805FCB00CA707A /* stickyParticleVer2.cpp */; settings = {ASSET_TAGS = (); }; };
+		6E1B33C11E8076CE00CA707A /* stickyParticleVer3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6E1B33BF1E8076CE00CA707A /* stickyParticleVer3.cpp */; settings = {ASSET_TAGS = (); }; };
 		6EF478C31E7EBD3C009FA12A /* stickyParticleVer1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6EF478C11E7EBD3C009FA12A /* stickyParticleVer1.cpp */; settings = {ASSET_TAGS = (); }; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
@@ -58,6 +60,10 @@
 		6E07E2A71E7D7FDF00D8D8BA /* stickyParticle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stickyParticle.hpp; sourceTree = "<group>"; };
 		6E07E2A91E7D800700D8D8BA /* particleTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = particleTree.cpp; sourceTree = "<group>"; };
 		6E07E2AA1E7D800700D8D8BA /* particleTree.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = particleTree.hpp; sourceTree = "<group>"; };
+		6E1B33BC1E805FCB00CA707A /* stickyParticleVer2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stickyParticleVer2.cpp; sourceTree = "<group>"; };
+		6E1B33BD1E805FCB00CA707A /* stickyParticleVer2.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stickyParticleVer2.hpp; sourceTree = "<group>"; };
+		6E1B33BF1E8076CE00CA707A /* stickyParticleVer3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stickyParticleVer3.cpp; sourceTree = "<group>"; };
+		6E1B33C01E8076CE00CA707A /* stickyParticleVer3.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stickyParticleVer3.hpp; sourceTree = "<group>"; };
 		6EF478C11E7EBD3C009FA12A /* stickyParticleVer1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stickyParticleVer1.cpp; sourceTree = "<group>"; };
 		6EF478C21E7EBD3C009FA12A /* stickyParticleVer1.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = stickyParticleVer1.hpp; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -133,6 +139,10 @@
 				6E07E2A71E7D7FDF00D8D8BA /* stickyParticle.hpp */,
 				6EF478C11E7EBD3C009FA12A /* stickyParticleVer1.cpp */,
 				6EF478C21E7EBD3C009FA12A /* stickyParticleVer1.hpp */,
+				6E1B33BC1E805FCB00CA707A /* stickyParticleVer2.cpp */,
+				6E1B33BD1E805FCB00CA707A /* stickyParticleVer2.hpp */,
+				6E1B33BF1E8076CE00CA707A /* stickyParticleVer3.cpp */,
+				6E1B33C01E8076CE00CA707A /* stickyParticleVer3.hpp */,
 				6E07E2A91E7D800700D8D8BA /* particleTree.cpp */,
 				6E07E2AA1E7D800700D8D8BA /* particleTree.hpp */,
 			);
@@ -237,9 +247,11 @@
 			files = (
 				6EF478C31E7EBD3C009FA12A /* stickyParticleVer1.cpp in Sources */,
 				6E07E2A81E7D7FDF00D8D8BA /* stickyParticle.cpp in Sources */,
+				6E1B33BE1E805FCB00CA707A /* stickyParticleVer2.cpp in Sources */,
 				6E07E2AB1E7D800700D8D8BA /* particleTree.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				6E07E2A21E7D7F3B00D8D8BA /* Particle.cpp in Sources */,
+				6E1B33C11E8076CE00CA707A /* stickyParticleVer3.cpp in Sources */,
 				6E07E2A51E7D7F7F00D8D8BA /* randParticle.cpp in Sources */,
 				6E07E29E1E7D7EFA00D8D8BA /* baseParticle.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,

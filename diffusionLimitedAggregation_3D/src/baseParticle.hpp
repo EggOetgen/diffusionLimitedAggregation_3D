@@ -14,7 +14,7 @@ class baseParticle {
 public:
     baseParticle(ofPoint initPos_, ofPoint initVel, ofPoint initAcc, float radius_);
     virtual void walk() = 0;
-    virtual void display()=0;
+    virtual void display();
     
     virtual void checkEdges()= 0;
 //    virtual void checkCollision()= 0;

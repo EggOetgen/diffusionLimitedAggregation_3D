@@ -14,13 +14,14 @@ class stickyParticle : public randParticle {
     
 public:
     stickyParticle(ofPoint origin, float maxDist, float radius_ );
- virtual   void display();
+    //stickyParticle(stickyParticle const& = stickyParticle);
+  virtual void display();
     void calculateInitPos();
-   virtual void checkCollision(const std::unique_ptr<stickyParticle> n);
-  virtual  bool checkCollisionBool(const std::unique_ptr<stickyParticle> n) const;
-    virtual void stick();
+   void checkCollision(const std::shared_ptr<stickyParticle> n);
+    bool checkCollisionBool(const std::shared_ptr<stickyParticle> n) const;
+void stick();
     
-    void stickyWalk();
+void walk();
     
     
     int state;

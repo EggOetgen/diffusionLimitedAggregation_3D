@@ -19,9 +19,9 @@ stickyParticle::stickyParticle(ofPoint origin,float maxDist, float radius_ ):ran
 
 void stickyParticle::display()
 {
-    if(state ==0) { ofSetColor(0,120,0); ofDrawSphere(position.x, position.y, position.z, radius);}
+    if(state ==0) { ofSetColor(0,120,0); ofDrawBox(position.x, position.y, position.z, radius);}
     else
-        if(state ==1) { ofSetColor(110); ofDrawSphere(position.x, position.y, position.z, radius);}
+        if(state ==1) { ofSetColor(110); ofDrawBox(position.x, position.y, position.z, radius);}
     
     
     //    if(state ==0) { ofSetColor(120); ofDrawBox(position.x, position.y, position.z, radius);}
@@ -29,7 +29,7 @@ void stickyParticle::display()
     //        if(state ==1) { ofSetColor(255); ofDrawBox(position.x, position.y, position.z, radius);}
 }
 
-void stickyParticle::checkCollision(const std::unique_ptr<stickyParticle> n){
+void stickyParticle::checkCollision(const std::shared_ptr<stickyParticle> n){
     
     if (n->state ==1) {
         
@@ -44,9 +44,9 @@ void stickyParticle::checkCollision(const std::unique_ptr<stickyParticle> n){
     }
 }
 
-bool stickyParticle::checkCollisionBool(const std::unique_ptr<stickyParticle> n) const{
+bool stickyParticle::checkCollisionBool(const std::shared_ptr<stickyParticle> n) const{
     
-    if (n->state == 1) {
+  //  if (n->state == 1) {
         
         float distSqr = ((position.x - n->position.x)*(position.x - n->position.x)) + ((position.y - n->position.y)*(position.y - n->position.y))+ ((position.z - n->position.z)*(position.z - n->position.z));
         
@@ -54,17 +54,25 @@ bool stickyParticle::checkCollisionBool(const std::unique_ptr<stickyParticle> n)
         
         if (distSqr <= dimSqr) {
             return true;
-        }
-    }
+            cout<<"wee"<<endl;
+            }
+   // }
+   // cout<<"poo"<<endl;
+
     return false;
 }
 
 
-void stickyParticle::stickyWalk(){
+void stickyParticle::walk(){
     
-    if (state ==0) {
-        walk();
-    }
+ //   if (state ==0) {
+    velocity.set(ofRandom(-1,1)*radius, ofRandom(-1,1)*radius, ofRandom(-1, 1)*radius);
+    velocity += acceleration;
+    // checkEdges();
+    position += velocity;
+    
+    acceleration.set(0,0,0);;
+   // }
     
 }
 

@@ -17,3 +17,9 @@ baseParticle::baseParticle(ofPoint initPos_, ofPoint initVel, ofPoint initAcc, f
     radius = radius_;
 
 }
+
+void baseParticle::display()
+{
+    ofSetColor(255,0,0);
+    ofDrawSphere(position, radius);
+}

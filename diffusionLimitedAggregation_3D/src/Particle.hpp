@@ -13,7 +13,7 @@ class Particle :baseParticle{
     
 public:
     Particle(ofPoint initPos_, ofPoint initVel, ofPoint initAcc, float radius_);
-    void walk();
+ void walk();
  virtual   void display();
     
     void checkEdges();

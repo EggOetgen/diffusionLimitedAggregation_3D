@@ -13,13 +13,13 @@ particleTree::particleTree(ofPoint origin_, float radius_ ){
     radius = radius_;
     origin = origin_;
     
-    std::unique_ptr<stickyParticleVer1> seed (new stickyParticleVer1(origin, 1, radius));
-    seed->state = 1;
+    std::shared_ptr<stickyParticle> seed (new stickyParticleVer2(origin, 1, radius));
+    seed->stick();
     prevTreeSize = boundRad = prevMaxDist = 0;
     
     m = true;
     treeSize = 0;
-    tree.push_back(std::move(seed));
+    tree.push_back(seed);
     mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
     
 }
@@ -40,30 +40,31 @@ void particleTree::update(){
 }
 void particleTree::display(){
     // if(m){
-    vector<std::unique_ptr<stickyParticle>>::iterator it = tree.begin();
+    vector<std::shared_ptr<stickyParticle>>::iterator it = tree.begin();
     for (;it != tree.end(); ++it ) {
         (*it)->display();
         
         //   }
     }
-    ofSetColor(100,0,60,80);
+   // ofSetColor(100,0,60,80);
     //mesh.draw();
 }
 
-bool particleTree::checkCollisionTree( std::unique_ptr<stickyParticle> p){
+bool particleTree::checkCollisionTree( std::shared_ptr<stickyParticle> p){
     
-    vector<std::unique_ptr<stickyParticle>>::iterator it = tree.begin();
+    vector<std::shared_ptr<stickyParticle>>::iterator it = tree.begin();
     for (;it != tree.end(); ++it ) {
-        if(p->checkCollisionBool(std::move(*it)))
+               if(p->checkCollisionBool(*it))
             return true;
+        
     }
     return false;
     
 }
 
-void particleTree::addParticle(std::unique_ptr<stickyParticle> p){
+void particleTree::addParticle(std::shared_ptr<stickyParticle> p){
     
-    tree.push_back(std::move(p));
+    tree.push_back(p);
     treeSize = tree.size();
     
 }
@@ -71,7 +72,7 @@ void particleTree::addParticle(std::unique_ptr<stickyParticle> p){
 float particleTree::calculateBound(){
     
     float maxDist = 0;
-    vector<std::unique_ptr<stickyParticle>>::iterator it = tree.begin();
+    vector<std::shared_ptr<stickyParticle>>::iterator it = tree.begin();
     for (;it != tree.end(); ++it ) {
         float distSqr = (*it)->position.squareDistance(origin);
         if (distSqr > maxDist) {
