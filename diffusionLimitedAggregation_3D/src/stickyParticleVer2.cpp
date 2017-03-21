@@ -23,9 +23,9 @@ void stickyParticleVer2::display()
 {
     c = abs(sin((ofGetFrameNum()-birth)/100));
     a = abs(sin((ofGetFrameNum()-birth)/1000));
-    // radius *=w;
+    
     if(state ==0) { ofSetColor(0); ofDrawBox(position.x, position.y, position.z, radius);}
-    //  else
+    
     if(state ==1) {
         ofSetColor(ofFloatColor(c,a)); ofDrawSphere(position.x, position.y, position.z, radius);}
     

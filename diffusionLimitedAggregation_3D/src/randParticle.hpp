@@ -6,6 +6,10 @@
 //
 //
 
+
+/*
+ WILL WALK 'RANDOMLY' AROUND SCREEN
+ */
 #pragma once
 #include "Particle.hpp"
 

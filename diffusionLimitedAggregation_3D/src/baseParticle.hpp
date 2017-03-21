@@ -6,6 +6,9 @@
 //
 //
 
+/*
+ ABSTRACT BASE CLASS FOR PARTICLE, DOESN'T DO MUCH
+ */
 
 #pragma once
 #include "ofMain.h"
@@ -16,12 +19,7 @@ public:
     virtual void walk() = 0;
     virtual void display();
     
-    virtual void checkEdges()= 0;
-//    virtual void checkCollision()= 0;
-//    virtual void checkCollisionBool()= 0;
-
-    
-    
+ 
     ofPoint initPos;
     ofPoint position;
     ofPoint velocity;
@@ -35,5 +33,5 @@ public:
     float radius;
     float mass;
     float forceStrength;
-    ofFloatColor c;
+
 };

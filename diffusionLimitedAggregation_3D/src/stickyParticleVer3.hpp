@@ -6,6 +6,11 @@
 //
 //
 
+/*
+ ONE OF THREE CHILDREN OF STICKY PARTICLE.
+ MIXTURE OF THE OTHER TWO, ALSO CUBES
+ */
+
 #pragma once
 #include "stickyParticle.hpp"
 
@@ -17,9 +22,7 @@ public:
     void display();
     
     
-    void stick();
-    
-    
+        
     float birth;
     float c,a;
     

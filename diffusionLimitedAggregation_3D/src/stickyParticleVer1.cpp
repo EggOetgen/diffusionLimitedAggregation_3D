@@ -12,7 +12,6 @@ stickyParticleVer1::stickyParticleVer1(ofPoint origin,float maxDist, float radiu
     
     calculateInitPos();
     state = 0;
-    bound = maxDist;
     birth = ofGetFrameNum();
     
 }
@@ -20,10 +19,9 @@ stickyParticleVer1::stickyParticleVer1(ofPoint origin,float maxDist, float radiu
 void stickyParticleVer1::display()
 {
     w = sin((ofGetFrameNum()-birth)/50)/2+1;
-   // radius *=w;
+   
     if(state ==0) { ofSetColor(255); ofDrawBox(position.x, position.y, position.z, radius);}
-  //  else
-        if(state ==1) {
+    if(state ==1) {
             ofSetColor(140,200); ofDrawSphere(position.x, position.y, position.z, radius*w);}
     
    }

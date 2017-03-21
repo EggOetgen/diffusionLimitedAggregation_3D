@@ -6,17 +6,17 @@
 //
 //
 
+/*
+ ADDED FEW MORE FEATURES. FUNCTIONS FOR SIMULATING ATTRACTION (PORTED FROM DAN SHIFMAN'S NATURE OF CODE), NOT REALLY USED IN MAIN PROGRAM
+ CONSTRAIN IS USED(FUNCTION AT BOTTOM)
+ */
+
 #include "Particle.hpp"
-
-
 
 Particle::Particle(ofPoint initPos_, ofPoint initVel, ofPoint initAcc, float radius_ ):baseParticle(initPos_, initVel, initAcc, radius_)
 {
     
-//    position     = initPos_;
-//    velocity     = initVel;
-//    acceleration = initAcc;
-//    
+  
     radius = radius_;
     mass = radius;
     
@@ -85,17 +85,7 @@ ofPoint Particle::generateForceTowardsPoint(ofPoint target, float power)
 
 ofPoint Particle::generateForceTowardsParticle(Particle target)
 {
-    //    ofPoint f = target.position-position;
-    //    ofPoint fSqr = f * f;
-    //    //float distSqr = position.squareDistance(target.position);
-    //    float distSqr = (position.x-target.position.x)*(position.x-target.position.x) + (position.y-target.position.y)*(position.y-target.position.y);
-    //    ofPoint force = fSqr/distSqr;
-    //
-    //    float strength = (forceStrength * mass *target.mass)/distSqr;
-    //    force *= 4;
-    //
-    //    return force;
-    
+ 
     ofPoint f = target.position-position;
     float distSqr = (f.x*f.x)+(f.y*f.y)+(f.z*f.z);
     
@@ -126,6 +116,8 @@ void Particle::repelParticle(Particle target)
     applyForce(-generateForceTowardsParticle(target));
 }
 
+
+//USED TO SEE IF PARTICLE IS OUTSIDE BOUNDIGN SPHERE
 bool Particle::constrain(ofPoint origin , float maxDist ){
     
     float distSqr = ((position.x-origin.x)*(position.x-origin.x)) + ((position.y-origin.y)*(position.y-origin.y)) + ((position.z-origin.z)*(position.z-origin.z));
@@ -134,11 +126,6 @@ bool Particle::constrain(ofPoint origin , float maxDist ){
     
     
     if(distSqr > maxDistSqr){
-        //        ofPoint f = position-origin;
-        //        f.normalize();
-        //        float strenght = 100;
-        //       // applyForce(f);
-        //        position -= f*10;
         return true;
         
     }

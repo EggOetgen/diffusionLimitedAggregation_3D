@@ -4,41 +4,38 @@
 void ofApp::setup(){
     
     ofSetFrameRate(60);
-    ofBackgroundGradient( ofColor( 25 ), ofColor( 0 ) );
-    //ofSetBackgroundColor(0);
-    ofEnableDepthTest();
+    ofBackgroundGradient( ofColor( 255 ), ofColor( 100 ) );
+      ofEnableDepthTest();
     
-     go = true;
-    grow =drawPoints = drawBound = rotate =false;
+    //USED FOR TOGGLING VIEWS AND STUFF
+    go = true;
+    grow = drawPoints = drawBound = rotate =false;
     
     float seedRad = 5.f;
     
     
-    // pointTree = new particleTree(ofPoint(0,0,0), 5.0);
-    
-    // maxDist = seedRad * 4.0;
-    
+    //HOW MANY RANDOM WALKERS
     pointSize = 40;
+    
+    //BOUNDING SPHERE RADIUS
     maxDist = seedRad*7.;
+    
     rad = seedRad;
     int dim = 10;
-    float size = 3;
-    float spacing = TWO_PI /dim;
-    for(int i = 0; i < pointSize; i++){
+   
+     for(int i = 0; i < pointSize; i++){
         std::shared_ptr<stickyParticle> p(new stickyParticleVer1(ofPoint(0,0,0), maxDist, rad));
         points.push_back(p);
     }
-    // }
-    cam.setNearClip(1);
-    cam.setFarClip(-100);
-    cam.setPosition(0,0,10);
-    cam.setTarget(ofVec3f(0,0,0));
+ 
+ 
     light.setPosition(-100,-300,300);
     light.enable();
     
+    //CAN LOWER THIS IF RUNNING SLOW, BUT THE HIGHER THE BETTER
     ofSetSphereResolution(20);
-    s=0;
-    // ofSetBackgroundAuto(false);
+    //s=0;
+    
     
     
 }
@@ -46,42 +43,42 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
      if(go){
-  //  for(int p = 0; p < 20; p++){
-        
-        
-        //  if(int(a)%20 ==0 && points.size()<pointSize/2){
+ 
+         //STUFF FOR ADDING NEW POINTS WHEN RUNNING LOW OR EXPLICITLY TOLD TO
         if(points.size()<pointSize/2 || grow){
             
-            //                if(int(a)%200 ==0){
-            //                    maxDist +=rad*2;
-            //                }
-            //   rad*=1.03;
-             float newDist =pointTree->calculateBound();
+            //   rad*=1.03; //IF YOU WANT THEM GRADUALY BIGGER
+            //   rad*=0.999; //IF YOU WANT THEM GRADUALY SMALLER
+            
+            //CALCULATE BOUNDING SPHERE
+            float newDist =pointTree->calculateBound();
             if(newDist>maxDist) maxDist = newDist;
+            
             for(int i = 1; i < pointSize/2; i++){
+                
+                //DECIDE HOW MANY OF EACH PARTICLE
                 int picker = ofRandom(pointSize/10);
-                
                 if(i<picker){
-                std::shared_ptr<stickyParticle> part(new stickyParticleVer2(ofPoint(0,0,0), maxDist, rad));
+                    
+                    std::shared_ptr<stickyParticle> part(new stickyParticleVer2(ofPoint(0,0,0), maxDist, rad));
                     std::shared_ptr<stickyParticle> part2(new stickyParticleVer3(ofPoint(0,0,0), maxDist, rad));
+                    
+                    points.push_back(part);
                     points.push_back(part2);
-
-                points.push_back(part);
-                } else if(i>picker){
-                     std::shared_ptr<stickyParticle> part(new stickyParticleVer1(ofPoint(0,0,0), maxDist, rad));
-                        points.push_back(part);
+                    }
+                
+                else if(i>picker){
+                    std::shared_ptr<stickyParticle> part(new stickyParticleVer1(ofPoint(0,0,0), maxDist, rad));
+                    
+                    points.push_back(part);
                 }
-               
-                
-            
-                
             }
-            
         }
         else if(add){
             for(int i = 1; i < pointSize; i++){
+               
+                //AS ABOVE
                 float picker = ofRandomf();
-                
                 if (picker <= 0.001) {
                     std::shared_ptr<stickyParticle> part(new stickyParticleVer1(ofPoint(0,0,0), maxDist, rad));
                     points.push_back(part);
@@ -90,83 +87,47 @@ void ofApp::update(){
                     std::shared_ptr<stickyParticle> part(new stickyParticleVer2(ofPoint(0,0,0), maxDist, rad));
                     points.push_back(part);
                 }
-
                 add = !add;
-                
             }
-            
         }
     
-    
-        
-    
-        
+         //STUFF FOR CONTOLING WALKERS (CHECKING COLLISIONS, MOVING ETC)
         vector<std::shared_ptr<stickyParticle>>::iterator it = points.end()-1;
         for (;it != points.begin(); --it ) {
             
             if((*it)->state ==0) (*it)->walk();
-        else
             if((*it)->state ==1){
                 pointTree->addParticle(*it);
                 points.erase(it);
-               // it->reset();
-                
             }
-            if ((*it)->constrain(ofPoint(0,0,0), maxDist+rad*4)) {
-                points.erase(it);
-                
-            }
-         
+            if ((*it)->constrain(ofPoint(0,0,0), maxDist+rad*4))    points.erase(it);
+            if ((pointTree->checkCollisionTree((*it))))             (*it)->stick();
 
-            if ((pointTree->checkCollisionTree((*it)))){(*it)->stick();}
 
-            
-
-        
-            
         }
     }
     
-        //   pointTree->update();
-        // pointTree->add();
-        
-        cout << ofGetFrameRate() <<" " <<pointTree->tree.size() << " " <<points.size() << " " << maxDist<<endl;
-   // }
-    //  }
+    
+       // cout << ofGetFrameRate() <<" " <<pointTree->tree.size() << " " <<points.size()<<endl'
+ 
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
     
+    //GENERAL OFX STUFF
     ofEnableDepthTest();
-    ofBackgroundGradient( ofColor( 255 ), ofColor( 100 ) );
-    //ofBackgroundGradient( ofColor( 50 ), ofColor( 0 ) );
-    
-    // if (go) {
-    
-    
-    stringstream s;
-    s << "Speed: " << ofGetFrameRate();
-    ofSetColor(0);
-    ofDrawBitmapString(s.str(), -w/2,-h/2+20
-                       );
-    
-    //ofTranslate(w/2,h/2);
-    ofRotateX(20);
-    
+    ofBackgroundGradient( ofColor( 255 ), ofColor( 180 ) );
     cam.begin();
     light.enable();
-    //light.setPosition(points[0].position);
+    
     
     if(rotate){
         ofRotateY(a);
         ofRotateZ(a);
     }
     
-    //    for(int i = 1; i <tree.size(); i++){
-    //        tree[i].display();
-    //
-    //    }
+   
     pointTree->display();
     
     if(drawPoints){
@@ -178,14 +139,11 @@ void ofApp::draw(){
         ofSetColor(ofFloatColor(1,1,1,0.4));
         ofDrawSphere(0, 0, maxDist);
     }
+    
     a+=0.5;
     light.disable();
-    // ofDisableLighting();
     cam.end();
-    //    if(ofGetFrameNum() ==2)
-    //        exit();
-    
-    //}
+  
 }
 
 //--------------------------------------------------------------
@@ -201,17 +159,14 @@ void ofApp::keyPressed(int key){
         rotate = !rotate;
     else if(key == '4')
         add = !add;
-    else if(key == 'c'){
-        if(points.size() !=0)
+    else if(key == 'c'||key =='C'){
+       // if(points.size() !=0)
         points.clear();
         go = !go;
     }
-    else if(key == '5'){
-        pointTree->m =!pointTree->m;
-        //
-    } else if(key == '6')
+    else if(key == '5')
         go = !go;
-    // pointTree->clear();
+        
     
 }
 
@@ -233,7 +188,7 @@ void ofApp::mouseDragged(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
     
-    pointTree->add();
+  
 }
 
 //--------------------------------------------------------------

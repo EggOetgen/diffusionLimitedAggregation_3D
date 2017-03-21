@@ -13,41 +13,25 @@ particleTree::particleTree(ofPoint origin_, float radius_ ){
     radius = radius_;
     origin = origin_;
     
+    //SET UP THE FIRST PARTICLE
     std::shared_ptr<stickyParticle> seed (new stickyParticleVer2(origin, 1, radius));
     seed->stick();
-    prevTreeSize = boundRad = prevMaxDist = 0;
     
-    m = true;
+    
+ 
     treeSize = 0;
     tree.push_back(seed);
-    mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
     
 }
-void particleTree::update(){
-    
-    for(int i =0; i < mesh.getNumVertices();i++){
-        ofPoint p = mesh.getVertex(i);
-        float offsetX = ofMap((ofNoise(ofGetFrameNum()*124, ofGetFrameNum()*124, ofGetFrameNum()*124)), 0, 1, -1,1);
-        float offsetY= ofMap((ofNoise(ofGetFrameNum(), ofGetFrameNum(), ofGetFrameNum())), 0, 1, -1,1);
-        float offsetZ = ofMap((ofNoise(ofGetFrameNum()*642, ofGetFrameNum()*642, ofGetFrameNum()*642)), 0, 1, -1,1);
-        p.x+=offsetX;
-        p.y+=offsetY;
-        p.z+=offsetZ;
-        mesh.setVertex(i, p);
-        
-    }
-    
-}
+
 void particleTree::display(){
-    // if(m){
+  
     vector<std::shared_ptr<stickyParticle>>::iterator it = tree.begin();
     for (;it != tree.end(); ++it ) {
         (*it)->display();
-        
-        //   }
+       
     }
-   // ofSetColor(100,0,60,80);
-    //mesh.draw();
+ 
 }
 
 bool particleTree::checkCollisionTree( std::shared_ptr<stickyParticle> p){
@@ -69,6 +53,8 @@ void particleTree::addParticle(std::shared_ptr<stickyParticle> p){
     
 }
 
+
+//SETS RADIUS OF BOUDING SPHERE EQUAL TO PARTICLE IN TREE FURTHEST FROM ORIGIN
 float particleTree::calculateBound(){
     
     float maxDist = 0;
@@ -83,8 +69,7 @@ float particleTree::calculateBound(){
         prevMaxDist = maxDist;
         boundRad = sqrt(maxDist);
     }
-    // cout << maxDist << " " << prevMaxDist << " " << boundRad <<endl;
-    return boundRad;
+       return boundRad;
 }
 
 
@@ -94,13 +79,3 @@ void particleTree::clear(){
     
 }
 
-void particleTree::add(){
-    //  vector<stickyParticle>::iterator it = tree.begin();
-    for (int i =treeSize;i<tree.size(); i++ ) {
-        mesh.addVertex(tree[i]->position);
-        mesh.addIndex(i);
-        //  mesh.addIndex(i-1);
-        
-    }
-    treeSize = tree.size();
-}
